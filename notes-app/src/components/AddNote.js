@@ -50,7 +50,7 @@ const AddNote = ({ handleAddNote }) => {
         name="content"
         onChange={handleChange}
       ></textarea>
-      <div className="add-note-actions">
+      <div className="note-actions">
         <span className="note-count">
           {noteContent.length}/{charLimit}
         </span>

@@ -7,17 +7,16 @@ const Note = ({ id, title, content, date, handleDeleteNote }) => {
     <div className="note">
       <span className="note-title">{title}</span>
       <p className="note-content">{content}</p>
-      <div className="note-footer">
-        <span className="note-date">{date}</span>
-      </div>
-
       <div className="note-actions">
-        <MdEditNote className="edit-icon" size={20} />
-        <MdDeleteForever
-          onClick={() => handleDeleteNote(id)}
-          className="delete-icon"
-          size={20}
-        />
+        <span className="note-date">{date}</span>
+        <div className="action-buttons">
+          <MdEditNote className="edit-icon" size={20} />
+          <MdDeleteForever
+            onClick={() => handleDeleteNote(id)}
+            className="delete-icon"
+            size={20}
+          />
+        </div>
       </div>
     </div>
   );
