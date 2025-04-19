@@ -24,15 +24,42 @@ const App = () => {
       id: nanoid(),
       title: title,
       content: content,
-      date: date.toLocaleDateString(),
+      date: date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
-    const newNotes = [...notes, newNote];
-    setNotes(newNotes);
+    setNotes([...notes, newNote]);
   };
 
   const deleteNote = (id) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
+  };
+
+  const editNote = (id, updatedTitle, updatedContent) => {
+    const updatedNotes = notes.map((note) => {
+      if (note.id === id) {
+        return {
+          ...note,
+          title: updatedTitle,
+          content: updatedContent,
+          lastUpdated: new Date().toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          isEdited: true,
+        };
+      }
+      return note;
+    });
+    setNotes(updatedNotes);
   };
 
   return (
@@ -48,6 +75,7 @@ const App = () => {
           )}
           handleAddNote={addNote}
           handleDeleteNote={deleteNote}
+          handleEditNote={editNote}
         />
       </div>
     </div>

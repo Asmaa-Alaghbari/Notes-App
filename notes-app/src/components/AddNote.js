@@ -59,7 +59,7 @@ const AddNote = ({ handleAddNote }) => {
             Add new note
           </button>
           <button className="action-button" onClick={handleCancelClick}>
-            Cancel
+            Clear
           </button>
         </div>
       </div>
