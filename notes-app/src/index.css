@@ -18,6 +18,27 @@ code {
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: darkblue;
+}
+
+.dark-mode {
+  background-color: black;
+}
+
+.dark-mode h1 {
+  color: lightblue;
 }
 
 .note {

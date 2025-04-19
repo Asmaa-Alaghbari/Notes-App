@@ -1,31 +1,22 @@
 import NoteList from "./components/NotesList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import Search from "./components/Search";
+import Header from "./components/Header";
 
 const App = () => {
-  const [notes, setNotes] = useState([
-    {
-      id: nanoid(), // Generate a unique ID for each note
-      title: "Note 1",
-      content: "This is the content of Note 1.",
-      date: "2025-01-01",
-    },
-    {
-      id: nanoid(),
-      title: "Note 2",
-      content: "This is the content of Note 2.",
-      date: "2025-01-02",
-    },
-    {
-      id: nanoid(),
-      title: "Note 3",
-      content: "This is the content of Note 3.",
-      date: "2025-01-03",
-    },
-  ]);
+  const [notes, setNotes] = useState(() => {
+    const savedNotes = localStorage.getItem("react-notes-app-data");
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
 
   const [searchText, setSearchText] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Load notes from local storage when the component mounts
+  useEffect(() => {
+    localStorage.setItem("react-notes-app-data", JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = (title, content) => {
     const date = new Date();
@@ -45,17 +36,20 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      <Search handleSearchNote={setSearchText} />
-      <NoteList
-        notes={notes.filter(
-          (note) =>
-            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-            note.content.toLowerCase().includes(searchText.toLowerCase())
-        )}
-        handleAddNote={addNote}
-        handleDeleteNote={deleteNote}
-      />
+    <div className={`${darkMode && "dark-mode"}`}>
+      <div className="container">
+        <Header handleToggleDarkMode={setDarkMode} />
+        <Search handleSearchNote={setSearchText} />
+        <NoteList
+          notes={notes.filter(
+            (note) =>
+              note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+              note.content.toLowerCase().includes(searchText.toLowerCase())
+          )}
+          handleAddNote={addNote}
+          handleDeleteNote={deleteNote}
+        />
+      </div>
     </div>
   );
 };
